@@ -28,7 +28,7 @@ public class Media {
         try (InputStream oggStream = getClass().getResourceAsStream(resourcePath)) {
             oggFile = oggStream.readAllBytes();
         }
-        
+
         ByteBuffer oggBuffer = null;
         STBVorbisInfo info = null;
         ShortBuffer tempSampleBuffer = null;
@@ -97,7 +97,7 @@ public class Media {
                 return "VORBIS_seek_without_length";
             case STBVorbis.VORBIS_unexpected_eof:
                 return "VORBIS_unexpected_eof";
-            case STBVorbis.VORBIS_seek_invalid: 
+            case STBVorbis.VORBIS_seek_invalid:
                 return "VORBIS_seek_invalid";
             case STBVorbis.VORBIS_invalid_setup:
                 return "VORBIS_invalid_setup";
@@ -163,13 +163,19 @@ public class Media {
     }
 
     public java.time.Duration getCurrentTime() {
-        int sampleNumber = sampleBuffer.position() / (isStereo ? 2 : 1);
-        return java.time.Duration.ofMillis((long) (sampleNumber * 1000 / sampleRate));
+        // Explaining variables for better readability
+        int bufferPosition = sampleBuffer.position();
+        int channelCount = isStereo ? 2 : 1;
+        int sampleNumber = bufferPosition / channelCount;
+
+        long sampleDurationInMilliseconds = (long) (sampleNumber * 1000 / sampleRate);
+
+        return java.time.Duration.ofMillis(sampleDurationInMilliseconds);
     }
 
     public float getTotalDuration() {
         return totalDuration;
-    }    
+    }
 
     public int getTotalSamples() {
         return totalSamples;
