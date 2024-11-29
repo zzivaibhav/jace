@@ -28,7 +28,7 @@ public class Media {
         try (InputStream oggStream = getClass().getResourceAsStream(resourcePath)) {
             oggFile = oggStream.readAllBytes();
         }
-
+        
         ByteBuffer oggBuffer = null;
         STBVorbisInfo info = null;
         ShortBuffer tempSampleBuffer = null;
@@ -97,7 +97,7 @@ public class Media {
                 return "VORBIS_seek_without_length";
             case STBVorbis.VORBIS_unexpected_eof:
                 return "VORBIS_unexpected_eof";
-            case STBVorbis.VORBIS_seek_invalid:
+            case STBVorbis.VORBIS_seek_invalid: 
                 return "VORBIS_seek_invalid";
             case STBVorbis.VORBIS_invalid_setup:
                 return "VORBIS_invalid_setup";
@@ -175,7 +175,7 @@ public class Media {
 
     public float getTotalDuration() {
         return totalDuration;
-    }
+    }    
 
     public int getTotalSamples() {
         return totalSamples;
